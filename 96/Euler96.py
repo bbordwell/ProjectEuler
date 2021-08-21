@@ -19,9 +19,9 @@ class Board:
     """This class represents a single sudoku board. Input a list of 81 ints for this initial board"""
     def __init__(self, board):
         self.board = board
-        self.updateBoard()
         self.validBoard = True      #Assume the input is valid, update later if proven otherwise
         self.solvedBoard = False    #assume the input board is not solved, update later if proven otherwise
+        self.updateBoard()
 
     def updateBoard(self):
         """This function updates the values for what numbers are in each row, collumn and block"""
@@ -55,33 +55,39 @@ class Board:
     
     def generateRow(self,n):
         """Input a row number (0-8) and return a set of numbers known to be in that row"""
-        row = set()
+        row = []
         for cell in self.board[n*9:(n*9)+9]:
-            if cell != 0:
-                row.add(cell)
+            if cell != 0 and cell not in row:
+                row.append(cell)
+            elif cell in row:
+                self.validBoard = False
             else:
                 pass
         return row
 
     def generateCollumn(self,n):
         """Input a collumn number (0-8) and return a set of numbers known to be in that collumn"""
-        collumn = set()
+        collumn = []
         for row in range(9):
-            if self.board[n+(row*9)]:
-                collumn.add(self.board[n+(row*9)])
+            if self.board[n+(row*9)] and self.board[n+(row*9)] not in collumn:
+                collumn.append(self.board[n+(row*9)])
+            elif self.board[n+(row*9)] in collumn:
+                self.validBoard = False
         return collumn
 
     def generateBlock(self,n):
         """Input a block number (1-9) and return a set of numbers known to be in that block"""
-        block = set()
+        block = []
         whatCells = {1:(0,1,2,9,10,11,18,19,20),2:(3,4,5,12,13,14,21,22,23),
                      3:(6,7,8,15,16,17,24,25,26),4:(27,28,29,36,37,38,45,46,47),
                      5:(30,31,32,39,40,41,48,49,50),6:(33,34,35,42,43,44,51,52,53),
                      7:(54,55,56,63,64,65,72,73,74),8:(57,58,59,66,67,68,75,76,77),
                      9:(60,61,62,69,70,71,78,79,80)}
         for cell in whatCells[n]:
-            if self.board[cell] != 0:
-                block.add(self.board[cell])
+            if self.board[cell] != 0 and cell not in block:
+                block.append(self.board[cell])
+            elif cell in block:
+                self.validBoard = False
         return block
 
     def whatRow(self,n):
