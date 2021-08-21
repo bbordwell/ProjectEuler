@@ -1,6 +1,3 @@
-def isSolved(board):
-    pass
-
 boardsFile = open("boards.txt")
 boardsList = []
 for line in boardsFile:
@@ -121,8 +118,10 @@ class Board:
                     return True
         return False
 
-
-
+    def solveAttempt(self):
+        while True:
+            if not self.nextSolve():
+                break
 
 for board in boards2:
     boardInstance = Board(board)
