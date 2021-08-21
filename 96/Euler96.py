@@ -1,3 +1,5 @@
+#This block opens boards.txt and creates a list of all 50 boards
+#The boards are converted into a list of 81 ints, read from left to right, top to bottom
 boardsFile = open("boards.txt")
 boardsList = []
 for line in boardsFile:
@@ -14,13 +16,15 @@ for board in boards:
     boards2.append(transform)
 
 class Board:
+    """This class represents a single sudoku board. Input a list of 81 ints for this initial board"""
     def __init__(self, board):
         self.board = board
         self.updateBoard()
-        self.validBoard = True
-        self.solvedBoard = False
+        self.validBoard = True      #Assume the input is valid, update later if proven otherwise
+        self.solvedBoard = False    #assume the input board is not solved, update later if proven otherwise
 
     def updateBoard(self):
+        """This function updates the values for what numbers are in each row, collumn and block"""
         self.row0 = self.generateRow(0)
         self.row1 = self.generateRow(1)
         self.row2 = self.generateRow(2)
@@ -50,6 +54,7 @@ class Board:
         self.block9 = self.generateBlock(9)
     
     def generateRow(self,n):
+        """Input a row number (0-8) and return a set of numbers known to be in that row"""
         row = set()
         for cell in self.board[n*9:(n*9)+9]:
             if cell != 0:
@@ -59,6 +64,7 @@ class Board:
         return row
 
     def generateCollumn(self,n):
+        """Input a collumn number (0-8) and return a set of numbers known to be in that collumn"""
         collumn = set()
         for row in range(9):
             if self.board[n+(row*9)]:
@@ -66,6 +72,7 @@ class Board:
         return collumn
 
     def generateBlock(self,n):
+        """Input a block number (1-9) and return a set of numbers known to be in that block"""
         block = set()
         whatCells = {1:(0,1,2,9,10,11,18,19,20),2:(3,4,5,12,13,14,21,22,23),
                      3:(6,7,8,15,16,17,24,25,26),4:(27,28,29,36,37,38,45,46,47),
@@ -78,12 +85,15 @@ class Board:
         return block
 
     def whatRow(self,n):
+        """Input a cell number, and return what row it is in"""
         return n//9
 
     def whatCollumn(self,n):
+        """Input a cell number and return what collumn it is in"""
         return n%9
 
     def whatBlock(self,n):
+        """Input a cell number and return what block it is in"""
         whatCells = {1:(0,1,2,9,10,11,18,19,20),2:(3,4,5,12,13,14,21,22,23),
                      3:(6,7,8,15,16,17,24,25,26),4:(27,28,29,36,37,38,45,46,47),
                      5:(30,31,32,39,40,41,48,49,50),6:(33,34,35,42,43,44,51,52,53),
@@ -94,6 +104,7 @@ class Board:
                 return k
 
     def whatCouldGoHere(self,n):
+        """Input a cell number, and based on what is known of its row, cell and block return what numbers could logically fit"""
         notPossibles = set()
         rows = [self.row0,self.row1,self.row2,self.row3,self.row4,self.row5,self.row6,self.row7,self.row8]
         for notPossible in rows[self.whatRow(n)]:
@@ -107,6 +118,7 @@ class Board:
         return {1,2,3,4,5,6,7,8,9} - notPossibles
 
     def checkCell(self,n):
+        """Input a cell number and return True if the correct value for the cell can be deduced"""
         if len(self.whatCouldGoHere(n)) == 1:
             return True
         if len(self.whatCouldGoHere(n)) == 0:
@@ -115,6 +127,7 @@ class Board:
             return False
 
     def nextSolve(self):
+        """This function searches the board for the next solvable square and updates the board with that solve"""
         for cell in range(81):
             if self.board[cell] == 0:
                 if self.checkCell(cell):
@@ -125,12 +138,14 @@ class Board:
         return False
 
     def solveAttempt(self):
+        "This function solves all cells that can be solved by logic"
         while True:
             if not self.nextSolve():
                 self.isSolved()
                 break
         
     def isSolved(self):
+        """This function checks if the board is completly solved. Returns True if so, False otherwise"""
         if 0 not in self.board and self.validBoard:
             self.solvedBoard = True
             return True
