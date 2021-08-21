@@ -17,6 +17,8 @@ class Board:
     def __init__(self, board):
         self.board = board
         self.updateBoard()
+        self.validBoard = True
+        self.solvedBoard = False
 
     def updateBoard(self):
         self.row0 = self.generateRow(0)
@@ -107,6 +109,10 @@ class Board:
     def checkCell(self,n):
         if len(self.whatCouldGoHere(n)) == 1:
             return True
+        if len(self.whatCouldGoHere(n)) == 0:
+            self.validBoard = False
+        else:
+            return False
 
     def nextSolve(self):
         for cell in range(81):
@@ -121,8 +127,14 @@ class Board:
     def solveAttempt(self):
         while True:
             if not self.nextSolve():
+                self.isSolved()
                 break
+        
+    def isSolved(self):
+        if 0 not in self.board and self.validBoard:
+            self.solvedBoard = True
+            return True
+        else:
+            return False
 
-
-print(boards2[0])
 
