@@ -158,3 +158,8 @@ class Board:
         else:
             return False
 
+    def uniqueCandidate(self,cell):
+        pass
+
+    def uniqueCandidateRow(self,cell):
+        pass

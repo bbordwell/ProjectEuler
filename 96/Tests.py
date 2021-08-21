@@ -51,6 +51,11 @@ class Euler96TestCase(unittest.TestCase):
         self.assertEqual(testBoard.solvedBoard,False)
         self.assertEqual(testBoard.validBoard,False)
 
+    #def test_unique_candidate(self):
+    #    testBoard = Board([0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+    #                       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+    #                       0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0])
+    #    self.assertEqual(testBoard.board[63],4)
 
 if __name__ == '__main__':
     unittest.main()
