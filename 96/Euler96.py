@@ -123,14 +123,6 @@ class Board:
             if not self.nextSolve():
                 break
 
-for board in boards2:
-    boardInstance = Board(board)
-    while True:
-        if not boardInstance.nextSolve():
-            break
-    if 0 in boardInstance.board:
-        print("could not solve")
-    else:
-        print(boardInstance.board)
 
+print(boards2[0])
 
