@@ -17,13 +17,21 @@ class Euler96TestCase(unittest.TestCase):
                                           5, 1, 4, 8, 1, 4, 2, 5, 3, 7, 6, 9, 6, 9, 5, 4, 1, 7, 3, 8, 2])
 
     def test_Board_invalid_board(self):
-        "Gives Board an invalid starting board and tests that Board.validBoard gets set to False"
+        """Gives Board an invalid starting board and tests that Board.validBoard gets set to False"""
         testBoard = Board([5, 0, 3, 0, 2, 0, 6, 0, 0, 9, 0, 0, 3, 0, 5, 0, 0, 1, 0, 0, 1, 8,
          0, 6, 4, 0, 0, 0, 0, 8, 1, 0, 2, 9, 0, 0, 7, 0, 0, 0, 0, 0, 0, 0, 8, 0, 0, 6, 7, 0,
           8, 2, 0, 0, 0, 0, 2, 6, 0, 9, 5, 0, 0, 8, 0, 0, 2, 0, 3, 0, 0, 9, 0, 0, 5, 0, 1, 0, 3, 0, 0])
         testBoard.solveAttempt()
         self.assertEqual(testBoard.validBoard,False)
 
+    def test_unsolvable_board(self):
+        """Try to solve a board that can not be solved by logic, test that the board is still marked as valid and not solved"""
+        testBoard = Board([0, 0, 0, 0, 0, 0, 9, 0, 7, 0, 0, 0, 4, 2, 0, 1, 8, 0, 0, 0, 0, 7, 0, 5, 0,
+                           2, 6, 1, 0, 0, 9, 0, 4, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 5, 0,
+                           7, 0, 0, 9, 9, 2, 0, 1, 0, 8, 0, 0, 0, 0, 3, 4, 0, 5, 9, 0, 0, 0, 5, 0, 7, 0, 0, 0, 0, 0, 0])
+        testBoard.solveAttempt()
+        self.assertEqual(testBoard.validBoard,True)
+        self.assertEqual(testBoard.solvedBoard,False)
 
 if __name__ == '__main__':
     unittest.main()
