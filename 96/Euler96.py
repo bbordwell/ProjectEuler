@@ -25,33 +25,36 @@ class Board:
 
     def updateBoard(self):
         """This function updates the values for what numbers are in each row, collumn and block"""
-        self.row0 = self.generateRow(0)
-        self.row1 = self.generateRow(1)
-        self.row2 = self.generateRow(2)
-        self.row3 = self.generateRow(3)
-        self.row4 = self.generateRow(4)
-        self.row5 = self.generateRow(5)
-        self.row6 = self.generateRow(6)
-        self.row7 = self.generateRow(7)
-        self.row8 = self.generateRow(8)
-        self.collumn0 = self.generateCollumn(0)
-        self.collumn1 = self.generateCollumn(1)
-        self.collumn2 = self.generateCollumn(2)
-        self.collumn3 = self.generateCollumn(3)
-        self.collumn4 = self.generateCollumn(4)
-        self.collumn5 = self.generateCollumn(5)
-        self.collumn6 = self.generateCollumn(6)
-        self.collumn7 = self.generateCollumn(7)
-        self.collumn8 = self.generateCollumn(8)
-        self.block1 = self.generateBlock(1)
-        self.block2 = self.generateBlock(2)
-        self.block3 = self.generateBlock(3)
-        self.block4 = self.generateBlock(4)
-        self.block5 = self.generateBlock(5)
-        self.block6 = self.generateBlock(6)
-        self.block7 = self.generateBlock(7)
-        self.block8 = self.generateBlock(8)
-        self.block9 = self.generateBlock(9)
+        self.rows = [[], [], [], [], [], [], [], [], []]
+        self.rows[0] = self.generateRow(0)
+        self.rows[1] = self.generateRow(1)
+        self.rows[2] = self.generateRow(2)
+        self.rows[3] = self.generateRow(3)
+        self.rows[4] = self.generateRow(4)
+        self.rows[5] = self.generateRow(5)
+        self.rows[6] = self.generateRow(6)
+        self.rows[7] = self.generateRow(7)
+        self.rows[8] = self.generateRow(8)
+        self.collumns = [[], [], [], [], [], [], [], [], []]
+        self.collumns[0] = self.generateCollumn(0)
+        self.collumns[1] = self.generateCollumn(1)
+        self.collumns[2] = self.generateCollumn(2)
+        self.collumns[3] = self.generateCollumn(3)
+        self.collumns[4] = self.generateCollumn(4)
+        self.collumns[5] = self.generateCollumn(5)
+        self.collumns[6] = self.generateCollumn(6)
+        self.collumns[7] = self.generateCollumn(7)
+        self.collumns[8] = self.generateCollumn(8)
+        self.blocks = [[], [], [], [], [], [], [], [], []]
+        self.blocks[0] = self.generateBlock(1)
+        self.blocks[1] = self.generateBlock(2)
+        self.blocks[2] = self.generateBlock(3)
+        self.blocks[3] = self.generateBlock(4)
+        self.blocks[4] = self.generateBlock(5)
+        self.blocks[5] = self.generateBlock(6)
+        self.blocks[6] = self.generateBlock(7)
+        self.blocks[7] = self.generateBlock(8)
+        self.blocks[8] = self.generateBlock(9)
     
     def generateRow(self,n):
         """Input a row number (0-8) and return a set of numbers known to be in that row"""
@@ -112,14 +115,11 @@ class Board:
     def whatCouldGoHere(self,n):
         """Input a cell number, and based on what is known of its row, cell and block return what numbers could logically fit"""
         notPossibles = set()
-        rows = [self.row0,self.row1,self.row2,self.row3,self.row4,self.row5,self.row6,self.row7,self.row8]
-        for notPossible in rows[self.whatRow(n)]:
+        for notPossible in self.rows[self.whatRow(n)]:
             notPossibles.add(notPossible)
-        collumns = [self.collumn0,self.collumn1,self.collumn2,self.collumn3,self.collumn4,self.collumn5,self.collumn6,self.collumn7,self.collumn8]
-        for notPossible in collumns[self.whatCollumn(n)]:
+        for notPossible in self.collumns[self.whatCollumn(n)]:
             notPossibles.add(notPossible)
-        blocks = [self.block1,self.block2,self.block3,self.block4,self.block5,self.block6,self.block7,self.block8,self.block9]
-        for notPossible in blocks[self.whatBlock(n)-1]:
+        for notPossible in self.blocks[self.whatBlock(n)-1]:
             notPossibles.add(notPossible)
         return {1,2,3,4,5,6,7,8,9} - notPossibles
 
@@ -158,3 +158,8 @@ class Board:
         else:
             return False
 
+#testBoard = Board([0, 0, 3, 0, 2, 0, 6, 0, 0, 9, 0, 0, 3, 0, 5, 0, 0, 1, 0, 0, 1, 8,
+#         0, 6, 4, 0, 0, 0, 0, 8, 1, 0, 2, 9, 0, 0, 7, 0, 0, 0, 0, 0, 0, 0, 8, 0, 0, 6, 7, 0,
+#          8, 2, 0, 0, 0, 0, 2, 6, 0, 9, 5, 0, 0, 8, 0, 0, 2, 0, 3, 0, 0, 9, 0, 0, 5, 0, 1, 0, 3, 0, 0])
+#testBoard.solveAttempt()
+#print(testBoard.board)
