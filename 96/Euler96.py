@@ -157,3 +157,18 @@ class Board:
             return True
         else:
             return False
+    
+    def uniqueCandidatecollumn(self,collumn):
+        leftToFind = [x for x in [1,2,3,4,5,6,7,8,9] if x not in self.collumns[collumn]]
+        for num in leftToFind:
+            fitCounter = 0
+            for row in range(9):
+                if self.board[collumn+(row*9)] == 0:
+                    if num in self.whatCouldGoHere(collumn+(row*9)):
+                        fitCounter += 1
+                        fitCell = collumn+(row*9)
+                        self.updateBoard()
+            if fitCounter == 1:
+                self.board[fitCell] = num
+                return True
+
