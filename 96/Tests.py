@@ -67,8 +67,19 @@ class Euler96TestCase(unittest.TestCase):
                            0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 
                            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
-        testBoard.uniqueCandidaterow(0)
+        testBoard.uniqueCandidateRow(0)
         self.assertEqual(testBoard.board[7],4)
+        self.assertEqual(testBoard.solvedBoard,False)
+        self.assertEqual(testBoard.validBoard,True)
+
+    def test_unique_candidate_block(self):
+        testBoard = Board([0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 
+                           0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+                           4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+        testBoard.uniqueCandidateBlock(0)
+        self.assertEqual(testBoard.board[10],4)
+        self.assertEqual(testBoard.validBoard,True)
+        self.assertEqual(testBoard.solvedBoard,False)
 
 if __name__ == '__main__':
     unittest.main()

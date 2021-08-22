@@ -84,7 +84,7 @@ class Board:
         for cell in self.cellsInBlock(n):
             if self.board[cell] != 0 and cell not in block:
                 block.append(self.board[cell])
-            elif cell in block:
+            elif self.board[cell] in block:
                 self.validBoard = False
         return block
 
@@ -181,7 +181,7 @@ class Board:
                      8:(60,61,62,69,70,71,78,79,80)}
         return whatCells[block]
 
-    def uniqueCandidaterow(self,row):
+    def uniqueCandidateRow(self,row):
         leftToFind = [x for x in [1,2,3,4,5,6,7,8,9] if x not in self.rows[row]]
         for num in leftToFind:
             fitCounter = 0
@@ -194,3 +194,16 @@ class Board:
                 self.updateBoard()
                 return True
 
+    def uniqueCandidateBlock(self,block):
+         leftToFind = [x for x in [1,2,3,4,5,6,7,8,9] if x not in self.blocks[block]]
+         for num in leftToFind:
+             fitCounter = 0
+             for cell in self.cellsInBlock(block):
+                 if self.board[cell] == 0 and num in self.whatCouldGoHere(cell):
+                     fitCounter += 1
+                     fitCell = cell
+             if fitCounter == 1:
+                self.board[fitCell] = num
+                self.updateBoard()
+                return True
+   
