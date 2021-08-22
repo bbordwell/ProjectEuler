@@ -156,9 +156,9 @@ class Board:
                 if self.board[cell] == 0 and num in self.whatCouldGoHere(cell):
                         fitCounter += 1
                         fitCell = cell
-                        self.updateBoard()
             if fitCounter == 1:
                 self.board[fitCell] = num
+                self.updateBoard()
                 return True
 
     def cellsInColumn(self,column):
@@ -181,5 +181,16 @@ class Board:
                      8:(60,61,62,69,70,71,78,79,80)}
         return whatCells[block]
 
-testBoard = Board(boards2[0])
-print(testBoard.cellsInBlock(1))
+    def uniqueCandidaterow(self,row):
+        leftToFind = [x for x in [1,2,3,4,5,6,7,8,9] if x not in self.rows[row]]
+        for num in leftToFind:
+            fitCounter = 0
+            for cell in self.cellsInRow(row):
+                if self.board[cell] == 0 and num in self.whatCouldGoHere(cell):
+                    fitCounter += 1
+                    fitCell = cell
+            if fitCounter == 1:
+                self.board[fitCell] = num
+                self.updateBoard()
+                return True
+
