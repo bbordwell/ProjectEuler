@@ -82,7 +82,7 @@ class Board:
         """Input a block number (0-8) and return a set of numbers known to be in that block"""
         block = []
         for cell in self.cellsInBlock(n):
-            if self.board[cell] != 0 and cell not in block:
+            if self.board[cell] != 0 and self.board[cell] not in block:
                 block.append(self.board[cell])
             elif self.board[cell] in block:
                 self.validBoard = False
@@ -122,8 +122,8 @@ class Board:
         else:
             return False
 
-    def nextSolve(self):
-        """This function searches the board for the next solvable square and updates the board with that solve"""
+    def nextSoleCandidate(self):
+        """This function searches the board for the next square solvable by the sole candidate method and updates the board with that solve"""
         for cell in range(81):
             if self.board[cell] == 0:
                 if self.checkCell(cell):
@@ -133,10 +133,10 @@ class Board:
                     return True
         return False
 
-    def solveAttempt(self):
-        "This function solves all cells that can be solved by logic"
+    def soleCandidateSolveAttempt(self):
+        "This function solves all cells that can be solved by the sole Candidate technique"
         while True:
-            if not self.nextSolve():
+            if not self.nextSoleCandidate():
                 self.isSolved()
                 break
         
@@ -149,6 +149,7 @@ class Board:
             return False
     
     def uniqueCandidatecolumn(self,column):
+        """Input a column number and it will check that column for any square that can be solved using unique candidate"""
         leftToFind = [x for x in [1,2,3,4,5,6,7,8,9] if x not in self.columns[column]]
         for num in leftToFind:
             fitCounter = 0
@@ -160,6 +161,14 @@ class Board:
                 self.board[fitCell] = num
                 self.updateBoard()
                 return True
+
+    def uniqueCandidatecolumns(self):
+        """This function checks all colums on the board for squares that can be solved using the unique candidate method"""
+        anySolves = False
+        for column in range(9):
+            if self.uniqueCandidatecolumn(column):
+                anySolves = True
+        return anySolves
 
     def cellsInColumn(self,column):
         """Input a column number (0-8) and output all cell locations in that column as a list"""
@@ -182,6 +191,7 @@ class Board:
         return whatCells[block]
 
     def uniqueCandidateRow(self,row):
+        """Input a row number and solve any squares in that row that can be solved using the unique candidate technique"""
         leftToFind = [x for x in [1,2,3,4,5,6,7,8,9] if x not in self.rows[row]]
         for num in leftToFind:
             fitCounter = 0
@@ -194,7 +204,16 @@ class Board:
                 self.updateBoard()
                 return True
 
+    def uniqueCandidateRows(self):
+        """Check all rows on the board for cells that can be solved using the unique candidate method"""
+        anysolves = False
+        for row in range(9):
+            if self.uniqueCandidateRow(row):
+                anysolves = True
+        return anysolves
+
     def uniqueCandidateBlock(self,block):
+         """Input a block number and solve any squares in that block that can be solved using the unique candidate technique"""
          leftToFind = [x for x in [1,2,3,4,5,6,7,8,9] if x not in self.blocks[block]]
          for num in leftToFind:
              fitCounter = 0
@@ -206,4 +225,54 @@ class Board:
                 self.board[fitCell] = num
                 self.updateBoard()
                 return True
+
+    def uniqueCandidateBlocks(self):
+        """Check all blocks on the board for cells that can be solved using the unique candidate method"""
+        anySolves = False
+        for block in range(9):
+            if self.uniqueCandidateBlock(block):
+                anySolves = True
+        return anySolves
    
+    def solveBoard(self):
+        """Try to solve the board using all techniques in this program. Work in Progress"""
+        while True:
+            self.soleCandidateSolveAttempt()
+            if self.validBoard == False:
+                print("Invalid Board")
+                return False
+            if self.solvedBoard == True:
+                return True
+            if self.uniqueCandidatecolumns():
+                if self.validBoard == False:
+                    print("Invalid Board")
+                    return False
+                if self.solvedBoard == True:
+                    return True
+                continue
+            if self.uniqueCandidateRows():
+                if self.validBoard == False:
+                    print("Invalid Board")
+                    return False
+                if self.solvedBoard == True:
+                    return True
+                continue
+            if self.uniqueCandidateBlocks():
+                if self.validBoard == False:
+                    print('Invalid Board')
+                    return False
+                if self.solvedBoard == True:
+                    return True
+                continue
+            return False
+
+
+for grid in boards2:
+    board = Board(grid)
+    if board.solveBoard():
+        print(board.board)
+    else:
+        print('sorry')
+
+            
+
