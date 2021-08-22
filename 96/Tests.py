@@ -15,6 +15,8 @@ class Euler96TestCase(unittest.TestCase):
                                           1, 8, 7, 6, 4, 9, 3, 5, 4, 8, 1, 3, 2, 9, 7, 6, 7, 2, 9, 5,
                                           6, 4, 1, 3, 8, 1, 3, 6, 7, 9, 8, 2, 4, 5, 3, 7, 2, 6, 8, 9, 
                                           5, 1, 4, 8, 1, 4, 2, 5, 3, 7, 6, 9, 6, 9, 5, 4, 1, 7, 3, 8, 2])
+        self.assertEqual(testBoard.solvedBoard,True)
+        self.assertEqual(testBoard.validBoard,True)
 
     def test_Board_invalid_board(self):
         """Gives Board an invalid starting board and tests that Board.validBoard gets set to False"""
@@ -51,11 +53,14 @@ class Euler96TestCase(unittest.TestCase):
         self.assertEqual(testBoard.solvedBoard,False)
         self.assertEqual(testBoard.validBoard,False)
 
-    def test_unique_candidate_collumn(self):
+    def test_unique_candidate_column(self):
         testBoard = Board([0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
                            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
                            0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0])
+        testBoard.uniqueCandidatecolumn(0)
         self.assertEqual(testBoard.board[63],4)
+        self.assertEqual(testBoard.solvedBoard,False)
+        self.assertEqual(testBoard.validBoard,True)
 
 if __name__ == '__main__':
     unittest.main()

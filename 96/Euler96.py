@@ -24,7 +24,7 @@ class Board:
         self.updateBoard()
 
     def updateBoard(self):
-        """This function updates the values for what numbers are in each row, collumn and block"""
+        """This function updates the values for what numbers are in each row, column and block"""
         self.rows = [[], [], [], [], [], [], [], [], []]
         self.rows[0] = self.generateRow(0)
         self.rows[1] = self.generateRow(1)
@@ -35,16 +35,16 @@ class Board:
         self.rows[6] = self.generateRow(6)
         self.rows[7] = self.generateRow(7)
         self.rows[8] = self.generateRow(8)
-        self.collumns = [[], [], [], [], [], [], [], [], []]
-        self.collumns[0] = self.generateCollumn(0)
-        self.collumns[1] = self.generateCollumn(1)
-        self.collumns[2] = self.generateCollumn(2)
-        self.collumns[3] = self.generateCollumn(3)
-        self.collumns[4] = self.generateCollumn(4)
-        self.collumns[5] = self.generateCollumn(5)
-        self.collumns[6] = self.generateCollumn(6)
-        self.collumns[7] = self.generateCollumn(7)
-        self.collumns[8] = self.generateCollumn(8)
+        self.columns = [[], [], [], [], [], [], [], [], []]
+        self.columns[0] = self.generatecolumn(0)
+        self.columns[1] = self.generatecolumn(1)
+        self.columns[2] = self.generatecolumn(2)
+        self.columns[3] = self.generatecolumn(3)
+        self.columns[4] = self.generatecolumn(4)
+        self.columns[5] = self.generatecolumn(5)
+        self.columns[6] = self.generatecolumn(6)
+        self.columns[7] = self.generatecolumn(7)
+        self.columns[8] = self.generatecolumn(8)
         self.blocks = [[], [], [], [], [], [], [], [], []]
         self.blocks[0] = self.generateBlock(0)
         self.blocks[1] = self.generateBlock(1)
@@ -68,15 +68,15 @@ class Board:
                 pass
         return row
 
-    def generateCollumn(self,n):
-        """Input a collumn number (0-8) and return a set of numbers known to be in that collumn"""
-        collumn = []
+    def generatecolumn(self,n):
+        """Input a column number (0-8) and return a set of numbers known to be in that column"""
+        column = []
         for row in range(9):
-            if self.board[n+(row*9)] and self.board[n+(row*9)] not in collumn:
-                collumn.append(self.board[n+(row*9)])
-            elif self.board[n+(row*9)] in collumn:
+            if self.board[n+(row*9)] and self.board[n+(row*9)] not in column:
+                column.append(self.board[n+(row*9)])
+            elif self.board[n+(row*9)] in column:
                 self.validBoard = False
-        return collumn
+        return column
 
     def generateBlock(self,n):
         """Input a block number (0-8) and return a set of numbers known to be in that block"""
@@ -97,8 +97,8 @@ class Board:
         """Input a cell number, and return what row it is in"""
         return n//9
 
-    def whatCollumn(self,n):
-        """Input a cell number and return what collumn it is in"""
+    def whatcolumn(self,n):
+        """Input a cell number and return what column it is in"""
         return n%9
 
     def whatBlock(self,n):
@@ -117,7 +117,7 @@ class Board:
         notPossibles = set()
         for notPossible in self.rows[self.whatRow(n)]:
             notPossibles.add(notPossible)
-        for notPossible in self.collumns[self.whatCollumn(n)]:
+        for notPossible in self.columns[self.whatcolumn(n)]:
             notPossibles.add(notPossible)
         for notPossible in self.blocks[self.whatBlock(n)]:
             notPossibles.add(notPossible)
@@ -158,15 +158,15 @@ class Board:
         else:
             return False
     
-    def uniqueCandidatecollumn(self,collumn):
-        leftToFind = [x for x in [1,2,3,4,5,6,7,8,9] if x not in self.collumns[collumn]]
+    def uniqueCandidatecolumn(self,column):
+        leftToFind = [x for x in [1,2,3,4,5,6,7,8,9] if x not in self.columns[column]]
         for num in leftToFind:
             fitCounter = 0
             for row in range(9):
-                if self.board[collumn+(row*9)] == 0:
-                    if num in self.whatCouldGoHere(collumn+(row*9)):
+                if self.board[column+(row*9)] == 0:
+                    if num in self.whatCouldGoHere(column+(row*9)):
                         fitCounter += 1
-                        fitCell = collumn+(row*9)
+                        fitCell = column+(row*9)
                         self.updateBoard()
             if fitCounter == 1:
                 self.board[fitCell] = num
