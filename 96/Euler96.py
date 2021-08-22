@@ -71,10 +71,10 @@ class Board:
     def generatecolumn(self,n):
         """Input a column number (0-8) and return a set of numbers known to be in that column"""
         column = []
-        for row in range(9):
-            if self.board[n+(row*9)] and self.board[n+(row*9)] not in column:
-                column.append(self.board[n+(row*9)])
-            elif self.board[n+(row*9)] in column:
+        for cell in self.cellsInColumn(n):
+            if self.board[cell] and self.board[cell] not in column:
+                column.append(self.board[cell])
+            elif self.board[cell] in column:
                 self.validBoard = False
         return column
 
@@ -162,13 +162,21 @@ class Board:
         leftToFind = [x for x in [1,2,3,4,5,6,7,8,9] if x not in self.columns[column]]
         for num in leftToFind:
             fitCounter = 0
-            for row in range(9):
-                if self.board[column+(row*9)] == 0:
-                    if num in self.whatCouldGoHere(column+(row*9)):
+            for cell in self.cellsInColumn(column):
+                if self.board[cell] == 0 and num in self.whatCouldGoHere(cell):
                         fitCounter += 1
-                        fitCell = column+(row*9)
+                        fitCell = cell
                         self.updateBoard()
             if fitCounter == 1:
                 self.board[fitCell] = num
                 return True
 
+    def cellsInColumn(self,column):
+        """Input a column number (0-8) and output all cells in that column"""
+        cells = []
+        for row in range(9):
+            cells.append(column+(row*9))
+        return cells
+
+testBoard = Board(boards2[0])
+print(testBoard.cellsInColumn(1))
