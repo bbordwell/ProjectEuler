@@ -233,33 +233,62 @@ class Board:
             if self.uniqueCandidateBlock(block):
                 anySolves = True
         return anySolves
-   
-    def solveBoard(self):
+
+    def simpleGuess(self):
+        for cell in range(81):
+            if self.board[cell] == 0 and len(self.whatCouldGoHere(cell)) == 2:
+                whats = list(self.whatCouldGoHere(cell))
+                newBoard1 = Board(self.board[:])
+                newBoard1.board[cell] = whats[0]
+                newBoard2 = Board(self.board[:])
+                newBoard2.board[cell] = whats[1]
+                newBoard1.solveBoard(recursive=True)
+                newBoard2.solveBoard(recursive=True)
+                if newBoard1.validBoard != newBoard2.validBoard:
+                    if newBoard1.validBoard:
+                        self.board[cell] = whats[0]
+                        self.updateBoard()
+                        return True
+                    if newBoard2.validBoard:
+                        self.board[cell] = whats[1]
+                        self.updateBoard()
+                        return True
+        return False
+
+
+    def solveBoard(self, recursive=False):
         """Try to solve the board using all techniques in this program. Work in Progress"""
         while True:
             self.soleCandidateSolveAttempt()
             if self.validBoard == False:
-                print("Invalid Board")
+                #print("Invalid Board")
                 return False
             if self.solvedBoard == True:
                 return True
             if self.uniqueCandidatecolumns():
                 if self.validBoard == False:
-                    print("Invalid Board")
+                    #print("Invalid Board")
                     return False
                 if self.solvedBoard == True:
                     return True
                 continue
             if self.uniqueCandidateRows():
                 if self.validBoard == False:
-                    print("Invalid Board")
+                    #print("Invalid Board")
                     return False
                 if self.solvedBoard == True:
                     return True
                 continue
             if self.uniqueCandidateBlocks():
                 if self.validBoard == False:
-                    print('Invalid Board')
+                    #print('Invalid Board')
+                    return False
+                if self.solvedBoard == True:
+                    return True
+                continue
+            if recursive == False and self.simpleGuess():
+                if self.validBoard == False:
+                    #print('Invalid Board)
                     return False
                 if self.solvedBoard == True:
                     return True
@@ -267,12 +296,4 @@ class Board:
             return False
 
 
-for grid in boards2:
-    board = Board(grid)
-    if board.solveBoard():
-        print(board.board)
-    else:
-        print('sorry')
-
-            
 
