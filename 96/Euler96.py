@@ -81,12 +81,7 @@ class Board:
     def generateBlock(self,n):
         """Input a block number (0-8) and return a set of numbers known to be in that block"""
         block = []
-        whatCells = {0:(0,1,2,9,10,11,18,19,20),1:(3,4,5,12,13,14,21,22,23),
-                     2:(6,7,8,15,16,17,24,25,26),3:(27,28,29,36,37,38,45,46,47),
-                     4:(30,31,32,39,40,41,48,49,50),5:(33,34,35,42,43,44,51,52,53),
-                     6:(54,55,56,63,64,65,72,73,74),7:(57,58,59,66,67,68,75,76,77),
-                     8:(60,61,62,69,70,71,78,79,80)}
-        for cell in whatCells[n]:
+        for cell in self.cellsInBlock(n):
             if self.board[cell] != 0 and cell not in block:
                 block.append(self.board[cell])
             elif cell in block:
@@ -103,14 +98,9 @@ class Board:
 
     def whatBlock(self,n):
         """Input a cell number and return what block it is in"""
-        whatCells = {0:(0,1,2,9,10,11,18,19,20),1:(3,4,5,12,13,14,21,22,23),
-                     2:(6,7,8,15,16,17,24,25,26),3:(27,28,29,36,37,38,45,46,47),
-                     4:(30,31,32,39,40,41,48,49,50),5:(33,34,35,42,43,44,51,52,53),
-                     6:(54,55,56,63,64,65,72,73,74),7:(57,58,59,66,67,68,75,76,77),
-                     8:(60,61,62,69,70,71,78,79,80)}
-        for k,v in whatCells.items():
-            if n in v:
-                return k
+        for block in range(9):
+            if n in self.cellsInBlock(block):
+                return block
 
     def whatCouldGoHere(self,n):
         """Input a cell number, and based on what is known of its row, cell and block return what numbers could logically fit"""
@@ -172,11 +162,24 @@ class Board:
                 return True
 
     def cellsInColumn(self,column):
-        """Input a column number (0-8) and output all cells in that column"""
+        """Input a column number (0-8) and output all cell locations in that column as a list"""
         cells = []
         for row in range(9):
             cells.append(column+(row*9))
         return cells
 
+    def cellsInRow(self,row):
+        """Input a row number (0-8) and output all cell locations in that row as a list"""
+        return list(range(row*9,(row*9)+9))
+
+    def cellsInBlock(self,block):
+        """Input a block number (0-8) and return a list of all cell locations in that block"""
+        whatCells = {0:(0,1,2,9,10,11,18,19,20),1:(3,4,5,12,13,14,21,22,23),
+                     2:(6,7,8,15,16,17,24,25,26),3:(27,28,29,36,37,38,45,46,47),
+                     4:(30,31,32,39,40,41,48,49,50),5:(33,34,35,42,43,44,51,52,53),
+                     6:(54,55,56,63,64,65,72,73,74),7:(57,58,59,66,67,68,75,76,77),
+                     8:(60,61,62,69,70,71,78,79,80)}
+        return whatCells[block]
+
 testBoard = Board(boards2[0])
-print(testBoard.cellsInColumn(1))
+print(testBoard.cellsInBlock(1))
