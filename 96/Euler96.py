@@ -235,6 +235,7 @@ class Board:
         return anySolves
 
     def simpleGuess(self):
+        """Finds cells with only two possibilities and tries both, if one can be proven wrong without further guessing update the board with the correct guess"""
         for cell in range(81):
             if self.board[cell] == 0 and len(self.whatCouldGoHere(cell)) == 2:
                 whats = list(self.whatCouldGoHere(cell))
@@ -254,46 +255,78 @@ class Board:
                         self.updateBoard()
                         return True
         return False
-
-
-    def solveBoard(self, recursive=False):
-        """Try to solve the board using all techniques in this program. Work in Progress"""
+                    
+    def solveBoard(self,recursive=False):
+        """Try to solve the board using all techniques in this program"""
         while True:
             self.soleCandidateSolveAttempt()
             if self.validBoard == False:
-                #print("Invalid Board")
                 return False
             if self.solvedBoard == True:
                 return True
             if self.uniqueCandidatecolumns():
                 if self.validBoard == False:
-                    #print("Invalid Board")
                     return False
                 if self.solvedBoard == True:
                     return True
                 continue
             if self.uniqueCandidateRows():
                 if self.validBoard == False:
-                    #print("Invalid Board")
                     return False
                 if self.solvedBoard == True:
                     return True
                 continue
             if self.uniqueCandidateBlocks():
                 if self.validBoard == False:
-                    #print('Invalid Board')
                     return False
                 if self.solvedBoard == True:
                     return True
                 continue
             if recursive == False and self.simpleGuess():
                 if self.validBoard == False:
-                    #print('Invalid Board)
                     return False
                 if self.solvedBoard == True:
                     return True
                 continue
             return False
 
+def sixGuess(board):
+    """This function is a terrible hack for grid 49, it trys all combinations of guesses for all cells that have two possibilities
+    This only works if the board has exactly 6 cells that have two possibilites"""
+    from itertools import product
+    guesses = []
+    cells = []
+    for cell in range(81):
+        if len(board.whatCouldGoHere(cell)) == 2:
+            guesses.append(board.whatCouldGoHere(cell))
+            cells.append(cell)
+    guesses = list(product(guesses[0],guesses[1],guesses[2],guesses[3],guesses[4],guesses[5]))
+    newBoards = []
+    for guess in guesses:
+        newBoards.append(Board(board.board[:]))
+    for newBoard in range(len(guesses)):
+        for cell in range(len(cells)):
+            newBoards[newBoard].board[cells[cell]] = guesses[newBoard][cell]
+    for newBoard in newBoards:
+        if newBoard.solveBoard():
+            return newBoard.board
+    return False
 
+#Solve all boards and create a list of all solutions    
+solvedBoards = []
+for n,grid in enumerate(boards2):
+    board = Board(grid)
+    if n != 48: #Grid 49 can't be solved by the logic currently in the board class
+        if board.solveBoard():
+            solvedBoards.append(board.board)
+    else:   #Use special guessing function created for grid 49. Todo improve main logic so i can solve this board
+        solvedBoards.append(sixGuess(board))
+
+#Find the number represented by the top left most three cells and add them all together for the final answer to Euler 96
+ans = 0
+for board in solvedBoards:
+    num = [str(x) for x in board[:3]]
+    num = int(str().join(num))
+    ans += num
+print(ans)
 
