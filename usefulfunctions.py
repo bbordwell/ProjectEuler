@@ -98,7 +98,7 @@ def writtennumber(number,withand=False,withspaces=False,withhyphen=False):
             return FIRST_TEN[firstdigit] + withspaces + THOUSAND + withspaces + FIRST_TEN[seconddigit] + withspaces + HUNDRED + withspaces + withand + OTHER_TENS[thirddigit] + withhyphen + FIRST_TEN[fourthdigit]
 
 
-def factors_of_N(n,include_One=True,include_N=False):
+def factors_of_N(n,include_One=True,include_N=True):
     """ Takes an integer and returns a list of factors."""
     if n == 1:
         if include_One == True:
