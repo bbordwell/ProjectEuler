@@ -62,8 +62,8 @@ class Board:
         for cell in self.board[n*9:(n*9)+9]:
             if cell != 0 and cell not in row:
                 row.append(cell)
-            elif cell in row:
-                self.validBoard = False
+            elif cell in row:       #Detect if a row has two of the same number in it
+                self.validBoard = False   #Mark the board as invalid
             else:
                 pass
         return row
@@ -237,20 +237,20 @@ class Board:
     def simpleGuess(self):
         """Finds cells with only two possibilities and tries both, if one can be proven wrong without further guessing update the board with the correct guess"""
         for cell in range(81):
-            if self.board[cell] == 0 and len(self.whatCouldGoHere(cell)) == 2:
-                whats = list(self.whatCouldGoHere(cell))
-                newBoard1 = Board(self.board[:])
-                newBoard1.board[cell] = whats[0]
-                newBoard2 = Board(self.board[:])
-                newBoard2.board[cell] = whats[1]
-                newBoard1.solveBoard(recursive=True)
-                newBoard2.solveBoard(recursive=True)
-                if newBoard1.validBoard != newBoard2.validBoard:
-                    if newBoard1.validBoard:
+            if self.board[cell] == 0 and len(self.whatCouldGoHere(cell)) == 2:  #find a cell with only 2 candidates
+                whats = list(self.whatCouldGoHere(cell))    #note what two numbers could go in that cell
+                newBoard1 = Board(self.board[:]) #create a copy of the current board
+                newBoard1.board[cell] = whats[0] #modify it with the first guess
+                newBoard2 = Board(self.board[:]) #create another copy for the second guess
+                newBoard2.board[cell] = whats[1] #modify it with the second guess
+                newBoard1.solveBoard(recursive=True)    #attempt to solve both boards
+                newBoard2.solveBoard(recursive=True)    #Flag recursive to disallow a guess board from guessing again 
+                if newBoard1.validBoard != newBoard2.validBoard:   #Check that one and only one is proven invalid
+                    if newBoard1.validBoard:    #If guess 1 was the valid guess, update the cell with that value
                         self.board[cell] = whats[0]
                         self.updateBoard()
                         return True
-                    if newBoard2.validBoard:
+                    if newBoard2.validBoard:    #if guess 2 was the valid guess, update the cell with that value
                         self.board[cell] = whats[1]
                         self.updateBoard()
                         return True
@@ -259,12 +259,12 @@ class Board:
     def solveBoard(self,recursive=False):
         """Try to solve the board using all techniques in this program"""
         while True:
-            self.soleCandidateSolveAttempt()
+            self.soleCandidateSolveAttempt()    #first try sole candidate logic
             if self.validBoard == False:
                 return False
             if self.solvedBoard == True:
-                return True
-            if self.uniqueCandidatecolumns():
+                return True                     #If solved we are done
+            if self.uniqueCandidatecolumns():   #now try unique candidate logic
                 if self.validBoard == False:
                     return False
                 if self.solvedBoard == True:
@@ -282,7 +282,7 @@ class Board:
                 if self.solvedBoard == True:
                     return True
                 continue
-            if recursive == False and self.simpleGuess():
+            if recursive == False and self.simpleGuess(): #if we still havent solved, try an easy guesses
                 if self.validBoard == False:
                     return False
                 if self.solvedBoard == True:
