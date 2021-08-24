@@ -250,6 +250,7 @@ def fibonacci(n=False,maxValue=False):
 
 def pythagoreanTriples(maxSide):
     """Input an Integer and output all pythagorean triples with all sides smaller than that number"""
+    #Euclid's formula, implemented by me.
     triples = set()
     for m in range(2,maxSide+1):
         for n in range(1,m):
