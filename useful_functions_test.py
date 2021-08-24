@@ -63,6 +63,7 @@ class useful_functions_tests(unittest.TestCase):
         self.assertEqual(usefulfunctions.factors_of_N(52,include_One=False,include_N=False),[2,4,13,26])
 
     def test_writtenumber(self):
+        """Tests for writtennumber"""
         self.assertEqual(usefulfunctions.writtennumber(193),'onehundredninetythree')
         self.assertEqual(usefulfunctions.writtennumber(75,withand=True),'seventyfive')
         self.assertEqual(usefulfunctions.writtennumber(233,withspaces=True),'two hundred thirtythree')
@@ -73,7 +74,21 @@ class useful_functions_tests(unittest.TestCase):
         self.assertEqual(usefulfunctions.writtennumber(974,withand=True,withspaces=True,withhyphen=True),'nine hundred and seventy-four')
 
     def test_sieveOfEratosthenes(self):
+        """Tests for sieveOfEratosthenes"""
         self.assertEqual(usefulfunctions.sieve_of_Eratosthenes(41),[2,3,5,7,11,13,17,19,23,29,31,37])
+
+    def test_pythagoreanTriples(self):
+        """Tests for pythagoreanTriples."""
+        self.assertEqual(usefulfunctions.pythagoreanTriples(100),[(3,4,5),(5,12,13),
+        (6,8,10),(7,24,25),(8,15,17),(9,12,15),(9,40,41),(10,24,26),(11,60,61),
+        (12,16,20),(12,35,37),(13,84,85),(14,48,50),(15,20,25),(15,36,39),
+        (16,30,34),(16,63,65),(18,24,30),(18,80,82),(20,21,29),(20,48,52),
+        (21,28,35),(21,72,75),(24,32,40),(24,45,51),(24,70,74),(25,60,65),
+        (27,36,45),(28,45,53),(28,96,100),(30,40,50),(30,72,78),(32,60,68),
+        (33,44,55),(33,56,65),(35,84,91),(36,48,60),(36,77,85),(39,52,65),
+        (39,80,89),(40,42,58),(40,75,85),(42,56,70),(45,60,75),(48,55,73),
+        (48,64,80),(51,68,85),(54,72,90),(57,76,95),(60,63,87),(60,80,100),
+        (65,72,97)])
 
 if __name__ == '__main__':
     unittest.main()

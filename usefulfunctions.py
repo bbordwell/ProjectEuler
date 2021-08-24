@@ -137,8 +137,6 @@ def isprime(n):
     return True
 
 
-
-
 def arecoprime(x,y):
     """ Takes two integers as input and returns True if they are coprime, otherwise False."""
     xfactors = set(factors_of_N(x,include_One=False,include_N=True))
@@ -146,9 +144,6 @@ def arecoprime(x,y):
     if xfactors.isdisjoint(yfactors):
         return True
     return False
-
-
-
 
 def phi(n):
     """Takes an int (n) and returns the number of positive ints thare are coprime to n."""
@@ -172,6 +167,7 @@ def farey(n):
         x1,x2,y1,y2 = x2,x,y2,y
     return ans
 
+
 def ordinal_number(num):
     """This function accepts an integer and returns that number as an ordinal number string"""
     oddballs = {'one':'first','two':'second', 'three':'third','five':'fifth','eight':'eighth','nine':'ninth','twelve':'twelfth'}
@@ -186,6 +182,7 @@ def ordinal_number(num):
     else:
         wr = wr[:-1] + 'ieth'
     return wr
+
 
 def romanToInteger(s):
     '''Accepts a roman numeral as a string and returns and integer. '''
@@ -232,6 +229,7 @@ def romanToInteger(s):
 
     return ans
 
+
 def fibonacci(n=False,maxValue=False):
     """If given n return the first n values from the Fibonacci sequence.
        If given maxValue return the sequence with all numbers below that value"""
@@ -248,3 +246,21 @@ def fibonacci(n=False,maxValue=False):
         while sum(fib[-2:]) <= maxValue:
             fib.append(sum(fib[-2:]))
         return fib
+
+
+def pythagoreanTriples(maxSide):
+    """Input an Integer and output all pythagorean triples with all sides smaller than that number"""
+    triples = set()
+    for m in range(2,maxSide+1):
+        for n in range(1,m):
+            if not arecoprime(m,n):
+                continue
+            else:
+                k = 1
+                while k * (m**2 + n**2) <= maxSide:
+                    a = k * (m**2 - n**2)
+                    b = k * (2*m*n)
+                    c = k * (m**2 + n**2)
+                    triples.add(tuple(sorted([a,b,c])))
+                    k += 1
+    return sorted(tuple(triples))

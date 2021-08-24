@@ -20,10 +20,10 @@ number = """73167176531330624919225119674426574742355349194934
 84580156166097919133875499200524063689912560717606
 05886116467109405077541002256983155200055935729725
 71636269561882670428252483600823257530420752963450""".replace('\n','')
-
+                                                    #remove all the newlines
 ans = 0
-for index in range(13,1000):
-    if prod([int(x) for x in list(number[index-13:index])]) > ans:
-        ans = prod([int(x) for x in list(number[index-13:index])])
+for index in range(13,1000): #Create slices that are 13 digits long
+    if prod([int(x) for x in list(number[index-13:index])]) > ans:  #convert the slice to ints and find the product
+        ans = prod([int(x) for x in list(number[index-13:index])])  #If it is great than any previous product store it
 
-print(ans)
+print(ans)  #print the highest found product
