@@ -90,5 +90,15 @@ class useful_functions_tests(unittest.TestCase):
         (48,64,80),(51,68,85),(54,72,90),(57,76,95),(60,63,87),(60,80,100),
         (65,72,97)])
 
+    def test_triangleNumbersGenerator(self):
+        """Tests for triangleNumbersGenerator"""
+        self.assertEqual(list(usefulfunctions.triangleNumbersGenerator(10)),[1,3,6,10,15,21,28,36,45,55])
+        triangleNumbers = usefulfunctions.triangleNumbersGenerator()
+        nums = []
+        for trianglenumber in range(10):
+            nums.append(triangleNumbers.__next__())
+        self.assertEqual(nums,[1,3,6,10,15,21,28,36,45,55])
+
+
 if __name__ == '__main__':
     unittest.main()

@@ -265,3 +265,13 @@ def pythagoreanTriples(maxSide):
                     triples.add(tuple(sorted([a,b,c])))
                     k += 1
     return sorted(tuple(triples))
+
+
+def triangleNumbersGenerator(limit=float('inf')):
+    """This generator produces triangle numbers"""
+    tNumber = 0
+    i = 1
+    while i <= limit:
+        tNumber += i
+        i += 1
+        yield tNumber
