@@ -7,6 +7,7 @@ names = names.split(',')
 names.sort()
 
 def score(name):
+    """Given a name in all capital letters return its alphabetical value"""
     letters = "0ABCDEFGHIJKLMNOPQRSTUVWXYZ"
     ans = 0
     for letter in name:
