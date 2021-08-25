@@ -4,6 +4,7 @@ sys.path.append("/home/bbordwell/Documents/SRC/ProjectEuler")   #Edit this to fi
 from usefulfunctions import factors_of_N as factors
 from itertools import combinations_with_replacement as combinations
 
+#This program solves Project Euler #23 by brute force.
 abundants = []
 for x in range(1,28123):
     if sum(factors(x,include_N=False)) > x:
