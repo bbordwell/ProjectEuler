@@ -10,7 +10,7 @@ for d in range(2,1000):
     n = 10
     while n < d:
         n *= 10
-    for x in range(1000):
+    while True:
         if (n,d) not in divs:
             divs.append((n,d))
             n = (n % d) * 10
