@@ -1,3 +1,7 @@
+#This program solves Euler #31.
+#Brute force solution.
+from time import time
+start = time()
 ans = 0
 for p200 in range(2):
     for p100 in range(3):
@@ -18,9 +22,7 @@ for p200 in range(2):
                         for p2 in range(101):
                             if (p200*200)+(p100*100)+(p50*50)+(p20*20)+(p10*10)+(p5*5)+(p2*2) > 200:
                                 break
-                            for p1 in range(201):
-                                if (p200*200)+(p100*100)+(p50*50)+(p20*20)+(p10*10)+(p5*5)+(p2*2)+p1 > 200:
-                                    break
-                                if (p200*200)+(p100*100)+(p50*50)+(p20*20)+(p10*10)+(p5*5)+(p2*2)+p1 == 200:
-                                    ans += 1
+                            for p1 in range(1):     #There will be one way to add more 1p coins to get to 200p
+                                ans += 1
 print(ans)
+print(time()-start)
