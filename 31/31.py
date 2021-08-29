@@ -1,7 +1,5 @@
 #This program solves Euler #31.
 #Brute force solution.
-from time import time
-start = time()
 ans = 0
 for p200 in range(2):
     for p100 in range(3):
@@ -25,4 +23,3 @@ for p200 in range(2):
                             for p1 in range(1):     #There will be one way to add more 1p coins to get to 200p
                                 ans += 1
 print(ans)
-print(time()-start)
