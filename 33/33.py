@@ -1,5 +1,4 @@
 from decimal import Decimal
-from typing import final
 
 #This Program solves Euler #33
 
