@@ -3,6 +3,8 @@ sys.path.append("/home/bbordwell/Documents/SRC/ProjectEuler")   #Edit this to fi
 
 from usefulfunctions import triangleNumbersGenerator
 
+#This program Solves Project Euler #42
+
 def score(word):
     """Given a name in all capital letters return its alphabetical value"""
     letters = "0ABCDEFGHIJKLMNOPQRSTUVWXYZ"
