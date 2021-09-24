@@ -5,6 +5,7 @@ getcontext().prec = 100
 
 def convergentsGenerator(d):
     """Generate convergents of a given non perfect square int."""
+    #https://en.wikipedia.org/wiki/Continued_fraction#Infinite_continued_fractions_and_convergents
     r = Decimal(d).sqrt()
     remainders = []
     h,k,a = [0,1],[1,0],[]
@@ -20,6 +21,7 @@ def convergentsGenerator(d):
 
 def solvePells(d):
     """Find the fundamental solution of for a Pell's equation given D."""
+    #https://en.wikipedia.org/wiki/Pell%27s_equation#Example
     convergents = convergentsGenerator(d)
     while True:
         convergant = next(convergents)
@@ -37,3 +39,6 @@ for d in ds:
         maxD = d
 print(maxD)
     
+test = convergentsGenerator(2)
+while True:
+    next(test)

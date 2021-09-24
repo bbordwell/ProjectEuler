@@ -1,8 +1,11 @@
 from decimal import *
 getcontext().prec = 250
 
+#This program solves Project Euler #64.
+
 def squareRootPeriod(d):
     """Input and int and output a continued fraction representation of its sqrt"""
+    #https://en.wikipedia.org/wiki/Continued_fraction#Infinite_continued_fractions_and_convergents
     r = Decimal(d).sqrt()
     remainders = []
     h,k,a = [0,1],[1,0],[]
