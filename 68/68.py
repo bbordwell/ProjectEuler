@@ -1,13 +1,16 @@
 from itertools import permutations
 from copy import deepcopy
 
+#This program solves Project Euler #68.
+
 class Ring:
-    
+    """This class represents a magic 5-gon ring."""
     def __init__(self,line):
         self.rings = [line,]
         self.ns = line
         
     def __add__(self,other):
+        """Add a new line to an existing partial ring"""
         self = deepcopy(self)
         if len(self.rings) == 4:
             if self.rings[0][1] != other.rings[0][2]:
@@ -29,12 +32,14 @@ class Ring:
         return self
         
 def allLines(total):
+    """Return all valid lines"""
     lines = permutations((1,2,3,4,5,6,7,8,9,10),3)
     lines = tuple(line for line in lines if sum(line) == total)
     lines = tuple(line for line in lines if not line[1] == 10 or line[2] == 10)
     return lines
     
 def appendRings(rings,total):
+    """Input a list of partial rings and a line total and output all possible rings with one more line."""
     newRings = []
     for ring in rings:
         for attempt in allLines(total):
@@ -44,8 +49,6 @@ def appendRings(rings,total):
                 pass
     return newRings
  
- 
-
 for total in range(6,28):
     rings = [Ring(x) for x in allLines(total)]
     for i in range(4):
