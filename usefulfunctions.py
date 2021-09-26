@@ -275,3 +275,29 @@ def triangleNumbersGenerator(limit=float('inf')):
         tNumber += i
         i += 1
         yield tNumber
+
+
+def primeFactorsOfRange(n):
+        """Return a list of prime divisors for each number from 2 to n."""
+        primes = sieve_of_Eratosthenes(n)
+        primeDivisors = {x:tuple() for x in range(2,n+1)}
+        for prime in primes:
+            i = 2
+            while i*prime <= n:
+                primeDivisors[i*prime] += (prime,)
+                i += 1
+        return primeDivisors
+
+
+def phis(n):
+    """Return every number (from 2 to n)'s phi value. in the format of ({n:phi(n)},)"""
+    ps = dict()
+    for k,v in primeFactorsOfRange(n).items():
+        if not v:
+            ps[k] = k - 1
+        else:
+            newk = k
+            for factor in v:
+                newk *= 1-(1/factor)
+            ps[k] = int(newk)
+    return ps
