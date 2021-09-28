@@ -3,6 +3,8 @@ sys.path.append("/home/bbordwell/Documents/SRC/ProjectEuler")   #Edit this to fi
 
 from usefulfunctions import pythagoreanTriples
 
+#This program solves Project Euler #75.
+
 triples = pythagoreanTriples(750_000)
 
 wireLengths = dict()
