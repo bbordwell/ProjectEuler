@@ -6,6 +6,8 @@ from itertools import product
 
 from  usefulfunctions import isprime
 
+#This program solves Project Euler #111.
+
 def euler(digits,d):
     """Given the number of digits and d, return (M,N,S)."""
     referenceNumber = list(str(d)*digits)
