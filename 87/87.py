@@ -3,6 +3,8 @@ sys.path.append("/home/bbordwell/Documents/SRC/ProjectEuler")   #Edit this to fi
 
 from usefulfunctions import sieve_of_Eratosthenes as sieve
 
+#This program solves Project Euler #87.
+
 seconds = [x**2 for x in sieve(7079)]
 thirds = [x**3 for x in sieve(373)]
 fourths = [x**4 for x in sieve(89)]
